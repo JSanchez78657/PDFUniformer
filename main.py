@@ -8,30 +8,30 @@ from PIL import ImageFilter
 # PDF Qualities
 # Full Cards 1 - 94, 109 - 110
 # Half Cards 95 - 108
-starting_page = 95
-ending_page = 108
+starting_page = 1
+ending_page = 6
 
 # Page Qualities
 rows_per_page = 3
 columns_per_page = 3
 cards_per_page = rows_per_page * columns_per_page
 
-# Card qualities (default resolution: 1700, 2200)
+# Card qualities (300 DPI)
 # Full Cards
-# origin = 79, 29
-# width = 503
-# height = 703
-# x_offset = 520
-# y_offset = 720
+origin = 119, 44
+width = 754
+height = 1054
+x_offset = 779
+y_offset = 1079
 # Mini Cards
-origin = 168, 131
-width = 325
-height = 499
-x_offset = 519
-y_offset = 720
+# origin = 252, 197
+# width = 488
+# height = 748
+# x_offset = 779
+# y_offset = 1079
 
 # Store Pdf with convert_from_path function
-images = convert_from_path('PnP (Major and Minor).pdf', first_page=starting_page, last_page=ending_page)
+images = convert_from_path('Millenium Blades Errata.pdf', dpi=300, first_page=starting_page, last_page=ending_page)
 cards = []
 fronts = []
 backs = []
@@ -80,9 +80,9 @@ for i in range(ending_page - starting_page + 1):
         selection[0] = origin[0]
         selection[1] = selection[1] + y_offset
 
-for i in range(len(fronts)):
-    cards.append(fronts[i])
+for i in range(22):
     cards.append(backs[i])
+    cards.append(fronts[i])
 
 if cards.__sizeof__() > 1:
     cards[0].save('ReformattedPDF.pdf', save_all=True, append_images=cards[1:])
